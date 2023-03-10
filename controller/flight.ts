@@ -1,3 +1,5 @@
+import { BadRequest } from '../config/error'
+
 export interface Flight {
 	from: string
 	to: string
@@ -16,7 +18,7 @@ export function sortFlights(flights: Flight[]): Flight[] {
 	let current = reverseMap.keys().next().value
 	while (reverseMap.has(current)) {
 		if (hash.has(current)) {
-			throw new Error('Invalid flights. Loop detected.')
+			throw new BadRequest('Invalid flights. Loop detected.')
 		}
 		hash.add(current)
 		current = reverseMap.get(current)!
@@ -29,7 +31,7 @@ export function sortFlights(flights: Flight[]): Flight[] {
 		const flight = flights[index]
 
 		if (!flight) {
-			throw new Error('Invalid flights. Orphan flight detected.')
+			throw new BadRequest('Invalid flights. Orphan flight detected.')
 		}
 
 		sortedFlights.push(flight)
